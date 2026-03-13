@@ -6,6 +6,7 @@ from matplotlib.animation import PillowWriter
 from IPython.display import display
 from matplotlib.animation import FFMpegWriter
 import os
+from pathlib import Path
 
 ##############################################################################################################################################
 #################################################         FFt_src       ######################################################################
@@ -450,7 +451,6 @@ class animation2D_FDM:
                  fps=10,            # video fps
                  dpi=120,           # video dpi
                  bitrate=1800):     # video bitrate
-
         self.nx = nx
         self.nz = nz
         self.dx = dx
@@ -467,14 +467,12 @@ class animation2D_FDM:
         self.fsc = fsc
         self.model_type = model_type
         self.cmap = cmap
-
         self.show = show
         self.save = save
         self.video_name = video_name
         self.fps = fps
         self.dpi = dpi
         self.bitrate = bitrate
-
     def animate(self):
         """
         Simulates and animates a 2D wave propagation using the finite difference method.
@@ -487,13 +485,15 @@ class animation2D_FDM:
         src = self.src
         idisp = self.idisp
         nop = self.nop
-
         show = self.show
         save = self.save
         fps = self.fps
         dpi = self.dpi
         bitrate = self.bitrate
 
+        repo_root = Path(__file__).resolve().parent.parent
+        videos_dir = repo_root / "videos"
+        videos_dir.mkdir(parents=True, exist_ok=True)
         # -------------------------
         # Initialize fields
         # -------------------------
@@ -503,7 +503,6 @@ class animation2D_FDM:
 
         pxx = np.zeros((nz, nx), dtype=float)
         pzz = np.zeros((nz, nx), dtype=float)
-
         # Velocity model
         if np.isscalar(self.c):
             c = np.full((nz, nx), float(self.c))
@@ -511,7 +510,6 @@ class animation2D_FDM:
             c = np.array(self.c, dtype=float)
             if c.shape != (nz, nx):
                 raise ValueError(f"c must have shape (nz, nx) = ({nz}, {nx}), got {c.shape}")
-
         # Receivers for seismograms
         nrec = len(irx)
         seis = np.zeros((nrec, nt))
@@ -521,28 +519,23 @@ class animation2D_FDM:
         cmax = float(np.max(c))
         print("Courant Criterion eps :")
         print(cmax * dt / dx)
-
         # -------------------------
         # Plot
         # -------------------------
         v = float(max(abs(np.min(src)), abs(np.max(src)))) if np.size(src) else 1.0
         if v == 0:
             v = 1.0
-
         t = np.arange(nt) * dt
-
         fig, (ax0, ax1, ax2) = plt.subplots(
             1, 3,
             figsize=(30, 8),
             gridspec_kw={'width_ratios': [1.7, 1.7, 3]},
             constrained_layout=True
         )
-
         fig.suptitle(
             f"2D Acoustic Wave Propagation in a Heterogeneous Medium, FINITE DIFFERENCE METHOD, nop = {nop}",
             fontsize=18, fontweight='bold', color=(0, 0, 1)
         )
-
         # --- Velocity model ---
         im0 = ax0.imshow(c, cmap='Spectral', aspect="auto")
         ax0.set_title(f'Velocity Model, Model = {self.model_type}')
@@ -559,7 +552,6 @@ class animation2D_FDM:
         # ax0.set_xticks(np.arange(-0.5, nx, 1), minor=True)
         # ax0.set_yticks(np.arange(-0.5, nz, 1), minor=True)
         # ax0.grid(which='minor', color=[0.5, 0.5, 0.5], linewidth=0.3, alpha=0.3)
-
         # --- Wavefield ---
         im = ax1.imshow(
             pnew,
@@ -570,31 +562,26 @@ class animation2D_FDM:
             origin="upper",
             aspect="auto"
         )
-
         ax1.scatter(irx, irz, marker='^', s=60, linewidths=1.0, color=(0, 0, 1))
         for k in range(len(irx)):
             ax1.text(
                 irx[k], irz[k] * 0.8, f'ST{k+1}',
                 ha='center', va='bottom', fontweight='bold', color=(0, 0, 1)
             )
-
         ax1.scatter([isx], [isz], marker='*', s=150, color=(0, 0, 0))
         ax1.text(
             float(isx) * 1.05, float(isz), 'Source',
             ha='left', va='center', fontweight='bold', color=(0, 0, 0)
         )
-
         cbar = fig.colorbar(im, ax=ax1, pad=0.01, fraction=0.03)
         cbar.set_label("Pressure Amplitude")
 
         ax1.set_xlabel("ix [km]")
         ax1.set_ylabel("iz")
         ax1.set_title("2D Wave Propagation")
-
         # --- Seismograms ---
         offset = fsc * v
         offsets = np.arange(nrec) * offset
-
         seis_lines = []
         for k in range(nrec):
             ln, = ax2.plot(
@@ -606,7 +593,6 @@ class animation2D_FDM:
         time_line = ax2.axvline(
             0.0, linewidth=3.0, color=[0, 0, 1], linestyle='--', alpha=0.6
         )
-
         ax2.set_title("Seismograms")
         ax2.set_xlim(t[0], t[-1])
         ax2.set_xlabel("Time (s)")
@@ -614,18 +600,18 @@ class animation2D_FDM:
         ax2.set_yticks(offsets)
         ax2.set_yticklabels([f"ST{k+1}" for k in range(nrec)])
         ax2.grid(True, alpha=0.25)
-
         # -------------------------
         # Display handle
         # -------------------------
         handle = None
         if show:
             handle = display(fig, display_id=True)
-
         # -------------------------
         # Video writer
         # -------------------------
         writer = None
+        video_path = None
+
         if save:
             writer = FFMpegWriter(
                 fps=fps,
@@ -634,10 +620,11 @@ class animation2D_FDM:
             )
 
             if self.video_name is None:
-                video_name = f'wave_propagation_2D_FD_{self.model_type}.mp4'
+                file_name = f"wave_propagation_2D_FD_{self.model_type}.mp4"
             else:
-                video_name = self.video_name
+                file_name = Path(self.video_name).name
 
+            video_path = videos_dir / file_name
         # -------------------------
         # Helper for plot update
         # -------------------------
@@ -648,15 +635,12 @@ class animation2D_FDM:
             ti = t[:it+1]
             for k, ln in enumerate(seis_lines):
                 ln.set_data(ti, seis[k, :it+1] + offsets[k])
-
             time_line.set_xdata([t[it], t[it]])
-
             if save:
                 writer.grab_frame()
 
             if show:
                 handle.update(fig)
-
         # -------------------------
         # Simulation loop
         # -------------------------
@@ -684,30 +668,22 @@ class animation2D_FDM:
                         pxx[j, :] = (-1.0 / 12.0) * p[j + 2, :] + (4.0 / 3.0) * p[j + 1, :] \
                                     - (5.0 / 2.0) * p[j, :] + (4.0 / 3.0) * p[j - 1, :] \
                                     - (1.0 / 12.0) * p[j - 2, :]
-
                 else:
                     raise ValueError("nop must be 3 or 5")
-
                 # scale by dx^2
                 pxx = pxx / (dx**2)
                 pzz = pzz / (dx**2)
-
                 # time extrapolation
                 pnew = 2.0 * p - pold + (dt**2) * (c**2) * (pxx + pzz)
-
                 # source
                 pnew[isz, isx] += src[it]
-
                 # seismograms
                 seis[ir, it] = pnew[irz[ir], irx[ir]]
-
                 # plot update
                 if (it % idisp) == 0:
                     update_plot(it)
-
                 # remap time levels
                 pold, p = p, pnew.copy()
-
                 # reset derivatives
                 pxx.fill(0.0)
                 pzz.fill(0.0)
@@ -716,14 +692,15 @@ class animation2D_FDM:
         # Run simulation
         # -------------------------
         if save:
-            with writer.saving(fig, video_name, dpi=dpi):
+            with writer.saving(fig, str(video_path), dpi=dpi):
                 run_simulation()
-            os.system(f'xdg-open "{video_name}"')
+            os.system(f'xdg-open "{video_path}"')
         else:
             run_simulation()
 
-        plt.close(fig)
-        return seis
+        # plt.close(fig)
+        # return seis
+    
 
 ##############################################################################################################################################
 ##############################################       PseudoSpectral Method         ###########################################################
@@ -750,8 +727,8 @@ class animation2D_PeudoSpectral:
                  video_name=None,   # output mp4 name
                  fps=10,            # video fps
                  dpi=120,           # video dpi
-                 bitrate=1800):     # video bitrate
-
+                 bitrate=1800):     
+        
         self.nx = nx
         self.nz = nz
         self.dx = dx
@@ -774,6 +751,8 @@ class animation2D_PeudoSpectral:
         self.fps = fps
         self.dpi = dpi
         self.bitrate = bitrate
+
+
     def animate_PseudoSpectral(self):
         """
         Execute the simulation and generate a real-time animation of the acoustic wave propagation in the heterogeneous medium.
@@ -795,6 +774,10 @@ class animation2D_PeudoSpectral:
         fps = self.fps
         dpi = self.dpi
         bitrate = self.bitrate
+
+        repo_root = Path(__file__).resolve().parent.parent
+        videos_dir = repo_root / "videos"
+        videos_dir.mkdir(parents=True, exist_ok=True)
         # -------------------------
         # Initialize fields
         # -------------------------
@@ -905,13 +888,21 @@ class animation2D_PeudoSpectral:
         # Video writer
         # -------------------------
         writer = None
+        video_path = None
+
         if save:
-            writer = FFMpegWriter(fps=fps,metadata=dict(artist="MSc. Ing. Carlos Celi"),
-                bitrate=bitrate)
+            writer = FFMpegWriter(
+                fps=fps,
+                metadata=dict(artist="MSc. Ing. Carlos Celi"),
+                bitrate=bitrate
+            )
+
             if self.video_name is None:
-                video_name = f'wave_propagation_2D_PsuedoSpectral_{self.model_type}.mp4'
+                file_name = f"wave_propagation_2D_PseudoSpectral_{self.model_type}.mp4"
             else:
-                video_name = self.video_name
+                file_name = Path(self.video_name).name
+
+            video_path = videos_dir / file_name
         # -------------------------
         # Helper for plot update
         # -------------------------
@@ -958,14 +949,16 @@ class animation2D_PeudoSpectral:
                 # Reset derivatives
                 pxx.fill(0.0)
                 pzz.fill(0.0)
+
         # -------------------------
         # Run simulation
         # -------------------------
         if save:
-            with writer.saving(fig, video_name, dpi=dpi):
+            with writer.saving(fig, str(video_path), dpi=dpi):
                 run_simulation()
-            os.system(f'xdg-open "{video_name}"')
+            os.system(f'xdg-open "{video_path}"')
         else:
             run_simulation()
-        plt.close(fig)
-        return seis
+        
+        # plt.close(fig)
+        # return seis
