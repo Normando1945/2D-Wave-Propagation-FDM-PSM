@@ -1,0 +1,10 @@
+LICENSE
+README.md
+setup.py
+wave_propagation_2d/__init__.py
+wave_propagation_2d/core_ws1d_2d.py
+wave_propagation_2d.egg-info/PKG-INFO
+wave_propagation_2d.egg-info/SOURCES.txt
+wave_propagation_2d.egg-info/dependency_links.txt
+wave_propagation_2d.egg-info/requires.txt
+wave_propagation_2d.egg-info/top_level.txt
