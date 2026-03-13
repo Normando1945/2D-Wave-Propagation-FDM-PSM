@@ -21,6 +21,15 @@ GitHub: [Normando1945](https://github.com/Normando1945)
 
 ---
 
+## Demo
+
+A short demonstration of the 2D wave propagation workflow is shown below.
+
+<p align="center">
+  <img src="figures/wave_demo.gif" alt="2D wave propagation demo" width="900">
+</p>
+
+
 ## Features
 
 - 2D wave propagation tools
