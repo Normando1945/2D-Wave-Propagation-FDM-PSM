@@ -52,7 +52,7 @@ A short demonstration of the 2D wave propagation workflow is shown below.
 │   ├── __init__.py
 │   └── core_wp_2d.py
 ├── examples/
-│   └── W5_P2.ipynb
+│   └── example_2D_propagation.ipynb
 ├── figures/
 ├── videos/
 ├── requirements.txt
