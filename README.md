@@ -50,7 +50,7 @@ A short demonstration of the 2D wave propagation workflow is shown below.
 2D-Wave-Propagation-FDM-PSM/
 ├── wave_propagation_2d/
 │   ├── __init__.py
-│   └── core_ws1d_2d.py
+│   └── core_wp_2d.py
 ├── examples/
 │   └── W5_P2.ipynb
 ├── figures/
