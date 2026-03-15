@@ -240,6 +240,42 @@ Official profile: [Prof. Dr. Heiner Igel - LMU Munich](https://www.cas.lmu.de/en
 
 ---
 
-## License
+## How to Cite
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+If you use this repository in academic work, class projects, reports, presentations, or educational material, please cite it as follows.
+
+### BibTeX
+
+    @misc{celi2026wave,
+      author       = {Carlos Andrés Celi Sánchez},
+      title        = {Wave Propagation: Educational Python Simulations Using Finite-Difference and Pseudo-Spectral Methods},
+      year         = {2026},
+      publisher    = {GitHub},
+      journal      = {GitHub repository},
+      howpublished = {\url{https://github.com/Normando1945/2D-Wave-Propagation-FDM-PSM.git}}
+    }
+
+### APA (7th Edition)
+
+Celi Sánchez, C. A. (2026). *Wave Propagation: Educational Python Simulations Using Finite-Difference and Pseudo-Spectral Methods* [Computational Wave Propagation]. GitHub. https://github.com/Normando1945/2D-Wave-Propagation-FDM-PSM.git
+
+---
+
+## License
+<p align="center">
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License">
+</p>
+
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
+
+---
+
+## Contributing
+
+This repository is maintained by the author as an educational and research-oriented project focused on numerical wave propagation.
+
+The repository is intended to progressively include theoretical notes, Python implementations, visual simulations, and methodological comparisons involving **Finite-Difference** and **Pseudo-Spectral** approaches.
+
+Students, researchers, and practitioners are welcome to explore the repository, report bugs, suggest improvements, or propose educational extensions. Contributions may be submitted through issues or pull requests and will be reviewed before any change is incorporated into the official repository.
+
+Future updates may include code optimization, improved visualization workflows, and more advanced computational implementations.s
