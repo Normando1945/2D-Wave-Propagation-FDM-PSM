@@ -3,7 +3,7 @@
 </p>
 
 
-# 2D-Wave-Propagation-FDM-PSM.
+## 2D-Wave-Propagation-FDM-PSM.
 
 Python package for **2D wave propagation simulations** using the **Finite Difference Method (FDM)** and the **Pseudo-Spectral Method (PSM)**.
 
