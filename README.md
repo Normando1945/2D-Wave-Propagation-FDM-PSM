@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbG04Y2Jycmk0aHpoaWV1cHZwbDc0M2l1em83MGJqYmd0YjB4cnhsdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/eWdS9hpdeccG4/giphy.gif" width="30%" alt="Matrix Structural Analysis Banner">
+  <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbG04Y2Jycmk0aHpoaWV1cHZwbDc0M2l1em83MGJqYmd0YjB4cnhsdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/eWdS9hpdeccG4/giphy.gif" width="30%" alt="Wave-Propagation-FDM-PSM Banner">
 </p>
 
 
@@ -58,18 +58,32 @@ A short demonstration of the 2D wave propagation workflow is shown below.
 
 ```text
 2D-Wave-Propagation-FDM-PSM/
-├── wave_propagation_2d/
+│── .github/
+│   ├── ISSUE_TEMPLATE/
+│   ├── workflows/
+│   │   └── python-check.yml
+│   ├── dependabot.yml
+│   └── PULL_REQUEST_TEMPLATE.md
+│
+│── examples/
+│   └── example_2D_propagation.ipynb
+│
+│── figures/
+│
+│── videos/
+│
+│── wave_propagation_2d/
 │   ├── __init__.py
 │   └── core_wp_2d.py
-├── examples/
-│   └── example_2D_propagation.ipynb
-├── figures/
-├── videos/
-├── requirements.txt
-├── setup.py
-├── .gitignore
-├── LICENSE
-└── README.md
+│
+│── .gitignore
+│── CODE_OF_CONDUCT.md
+│── CONTRIBUTING.md
+│── LICENSE
+│── README.md
+│── SECURITY.md
+│── requirements.txt
+│── setup.py
 ```
 
 ---
