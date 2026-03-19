@@ -90,7 +90,16 @@ A short demonstration of the 2D wave propagation workflow is shown below.
 
 ## Installation
 
-Clone the repository:
+Clone the repository using either **HTTPS** or **SSH**.
+
+### Option A. HTTPS (recommended for most users)
+
+```bash
+git clone https://github.com/Normando1945/2D-Wave-Propagation-FDM-PSM.git
+cd 2D-Wave-Propagation-FDM-PSM
+```
+
+### Option B. SSH (recommended for users with GitHub SSH already configured)
 
 ```bash
 git clone git@github.com:Normando1945/2D-Wave-Propagation-FDM-PSM.git
@@ -200,12 +209,18 @@ seis = anim.animate()
 
 ## Output
 
+The repository currently generates the following outputs:
+
 - Numerical simulation of the 2D wavefield
-- Receiver seismograms
-- Real-time animation display
-- MP4 video files automatically saved in:
+- Receiver seismograms extracted at the specified receiver locations
+- Real-time animation display during the simulation
+- MP4 video files automatically saved when export is enabled
+- Supporting visual results that can be organized in the `figures/` and `videos/` folders
+- Educational examples and workflows demonstrated in the `examples/` folder
 
 ```text
+examples/
+figures/
 videos/
 ```
 
