@@ -17,7 +17,7 @@ This repository is intended for users interested in numerical wave propagation, 
 Structural Engineer and Researcher  
 Pontificia Universidad Católica del Ecuador
 
-GitHub: [Normando1945](https://github.com/Normando1945)
+WebPage: [Carlos Celi](https://normando1945.wixsite.com/cceli)
 
 ---
 
