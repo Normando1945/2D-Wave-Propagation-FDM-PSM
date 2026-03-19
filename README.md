@@ -296,7 +296,7 @@ If you use this repository in academic work, class projects, reports, presentati
 
 ### APA (7th Edition)
 
-Celi Sánchez, C. A. (2026). *Wave Propagation: Educational Python Simulations Using Finite-Difference and Pseudo-Spectral Methods* [Computational Wave Propagation]. GitHub. https://github.com/Normando1945/2D-Wave-Propagation-FDM-PSM.git
+Celi S., Carlos. A. (2026). *Wave Propagation: Educational Python Simulations Using Finite-Difference and Pseudo-Spectral Methods* [Computational Wave Propagation]. GitHub. https://github.com/Normando1945/2D-Wave-Propagation-FDM-PSM.git
 
 ---
 
