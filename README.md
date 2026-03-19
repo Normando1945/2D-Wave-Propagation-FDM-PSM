@@ -21,6 +21,16 @@ GitHub: [Normando1945](https://github.com/Normando1945)
 
 ---
 
+<p align="center">
+  <a href="https://github.com/Normando1945/2D-Wave-Propagation-FDM-PSM/actions/workflows/python-check.yml">
+    <img src="https://github.com/Normando1945/2D-Wave-Propagation-FDM-PSM/actions/workflows/python-check.yml/badge.svg" alt="Python Check">
+  </a>
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License">
+</p>
+
+
+---
+
 ## Demo
 
 A short demonstration of the 2D wave propagation workflow is shown below.
